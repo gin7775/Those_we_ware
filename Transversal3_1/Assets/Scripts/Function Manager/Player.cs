@@ -1,71 +1,78 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private Inputs inputs;
+    public float moveSpeed = 5f;
 
+    public bool isMovementPressed;
 
-    [SerializeField]
-    private float MovementSpeed;
-    [SerializeField]
-    private float RotationSpeed;
+    public float rotationSpeed;
 
+    float horizontal;
 
+    float vertical;
 
-    [SerializeField]
-    private Camera Camera;
-
+   
     Animator animator;
 
+    CharacterController characterController;
 
-    private void Awake()
+    private void Start()
     {
-        inputs =  GetComponent<Inputs>();
+        characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
     }
-
-    // Update is called once per frame
     void Update()
     {
+        MovementDirection();
+        Animations();
 
-        Vector3 targetVector = new Vector3(inputs.InputVector.x,0, inputs.InputVector.y);            //Revisa el input vertical y horizontal 
-
-        Vector3 movementVector = MoveTowardTarget(targetVector);                //Se mueva a la direccion que esta apuntando
-
-        RotateTowardMovementVector(movementVector);                         //Rote en la dirección que vea el jugador
     }
 
-
-    private Vector3 MoveTowardTarget(Vector3 targetVector)
+    public void OnMoveInput(float horizontal, float vertical)
     {
-        
-        targetVector = Quaternion.Euler(0, Camera.gameObject.transform.rotation.eulerAngles.y, 0) * targetVector;
-        var targetPosition = transform.position + targetVector * MovementSpeed * Time.deltaTime;
-        transform.position = targetPosition;
-        return targetVector;
+        this.vertical = vertical;
+        this.horizontal = horizontal;
+        isMovementPressed = horizontal != 0 || vertical != 0 ;
+       
     }
 
-    private void RotateTowardMovementVector(Vector3 movementVector)
+
+    public void MovementDirection()
     {
-        
-        if (movementVector.magnitude == 0) 
-        {
-            animator.SetFloat("Speed", 0);
-            
-            return; 
+        Vector3 moveDirection = Vector3.forward * vertical + Vector3.right * horizontal;
 
+       
+
+        Vector3 cameraForward = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up);          //Necesitamos el vector que tiene la camara 
+
+        Quaternion rotationToCamera = Quaternion.LookRotation(cameraForward, Vector3.up);
         
-        }
-        else
+        moveDirection = rotationToCamera * moveDirection;
+                           
+
+        if(moveDirection != Vector3.zero)
         {
-            animator.SetFloat("Speed", 1);
+            Quaternion rotationToMoveDirection = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationToMoveDirection, rotationSpeed * Time.deltaTime);
         }
-        var rotation = Quaternion.LookRotation(movementVector);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, RotationSpeed);
+   
+
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
+    
+    public void Animations()
+    {
 
 
+        animator.SetFloat("speed", characterController.velocity.sqrMagnitude / moveSpeed);
+
+
+
+    }
+    
 }
