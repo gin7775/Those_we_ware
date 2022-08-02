@@ -8,37 +8,62 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
-    public bool isMovementPressed;
+    private bool isMovementPressed;
 
     public float rotationSpeed;
 
     float horizontal;
 
     float vertical;
+    [SerializeField] AnimationCurve dodgeCurve;
 
+    bool isDodging;
+
+    float dodgeTimer;
+
+    
    
+
+    Vector3 direction;
     Animator animator;
 
+    private PlayerInput playerInput;
     CharacterController characterController;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+
+        Keyframe dodgeLastFrame = dodgeCurve[dodgeCurve.length - 1];   
+        dodgeTimer = dodgeLastFrame.time;
     }
     void Update()
     {
-        MovementDirection();
+        if(!isDodging) MovementDirection();
         Animations();
+       
+
+       
+    }
+    public void OnRoll(InputValue value)
+    {
+
+        if (direction.magnitude != 0)
+        {
+            StartCoroutine(Dodge());                       //Solo cuando el jugador se este moviendo.
+            
+        }
+       
 
     }
-
+    
     public void OnMoveInput(float horizontal, float vertical)
     {
         this.vertical = vertical;
         this.horizontal = horizontal;
         isMovementPressed = horizontal != 0 || vertical != 0 ;
-       
+        
     }
 
 
@@ -63,6 +88,7 @@ public class Player : MonoBehaviour
    
 
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        direction = moveDirection;
     }
     
     public void Animations()
@@ -74,5 +100,34 @@ public class Player : MonoBehaviour
 
 
     }
-    
+
+    IEnumerator Dodge()
+    {
+        animator.SetTrigger("Dodge");
+
+        isDodging = true;
+
+        float timer = 0;
+
+        characterController.center = new Vector3(0, 0.47f, 0);
+
+        characterController.height = 0.93f;
+        while (timer < dodgeTimer)
+        {
+
+            float speed = dodgeCurve.Evaluate(timer);
+            Vector3 dir = (transform.forward * speed) + (Vector3.up * vertical);        //Añadade la velocidad y la direccion del personaje
+
+            characterController.Move(dir * Time.deltaTime);
+
+            timer += Time.deltaTime;
+            yield return null; 
+        }
+        characterController.center = new Vector3(0, 0.94f, 0);
+        characterController.height = 1.86f;
+        isDodging = false;
+
+    }
+
+
 }

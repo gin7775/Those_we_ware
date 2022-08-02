@@ -90,6 +90,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerActions",
+            "id": "f19dbd7c-4e14-4157-b809-c6eb093ef457",
+            "actions": [
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "aa387052-7b85-4c20-a569-29ae0b27a48c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bb86bb95-9e2d-42d0-b496-6d7f36ed6fc3",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
