@@ -15,6 +15,8 @@ public class Projectile_Test : MonoBehaviour
         rb = this.gameObject.GetComponent<Rigidbody>();
 
         rb.AddForce(Vector3.right * speed,ForceMode.VelocityChange);
+
+        Destroy(this.gameObject, 4.5f);
     }
 
    
