@@ -5,16 +5,16 @@ using UnityEngine;
 public class Projectile_Test : MonoBehaviour
 {
 
-    public float speed;
-    public Rigidbody rb;
+   // public float speed;
+    //public Rigidbody rb;
 
     void Start()
     {
 
 
-        rb = this.gameObject.GetComponent<Rigidbody>();
+        //rb = this.gameObject.GetComponent<Rigidbody>();
 
-        rb.AddForce(Vector3.right * speed,ForceMode.VelocityChange);
+       // rb.AddForce(Vector3.right * speed,ForceMode.VelocityChange);
 
         Destroy(this.gameObject, 4.5f);
     }
