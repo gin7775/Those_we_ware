@@ -11,7 +11,8 @@
                     "id": "ec4366f7-1520-47a5-a998-6fa3276ef8e0",
                     "expectedControlType": "Vector2",
                     "processors": "NormalizeVector2",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Run",
@@ -19,7 +20,8 @@
                     "id": "1720b244-fc0e-4bee-a4eb-c9f0c7ab2782",
                     "expectedControlType": "Button",
                     "processors": "NormalizeVector2",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -101,7 +103,26 @@
                     "id": "aa387052-7b85-4c20-a569-29ae0b27a48c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DisableGun",
+                    "type": "Button",
+                    "id": "d1cd7bb1-85c2-45c6-801b-c280283fb57b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "b1b99161-566b-4a4d-a786-8bc90ce92a90",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -113,6 +134,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b51c0b98-010b-4f72-9142-6ce802160eb9",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisableGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da68c4a2-8194-4718-8918-9e2e685fd0e5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

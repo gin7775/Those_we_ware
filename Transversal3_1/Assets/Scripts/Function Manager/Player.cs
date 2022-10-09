@@ -21,7 +21,8 @@ public class Player : MonoBehaviour
 
     float dodgeTimer;
 
-    
+    public bool withWeapon;
+    public bool isAttacking;
    
 
     Vector3 direction;
@@ -52,13 +53,21 @@ public class Player : MonoBehaviour
         if (direction.magnitude != 0)                         //Solo cuando el jugador se este moviendo.
         {
            
-            if(!isDodging)
+            if(!isDodging )
             {
                 StartCoroutine(Dodge());                       
             }
         }
        
 
+    }
+
+    public void OnAttack(InputValue input)
+    {
+        if(!isDodging)
+        {
+            Attack();
+        }
     }
     
     public void OnMoveInput(float horizontal, float vertical)
@@ -130,6 +139,25 @@ public class Player : MonoBehaviour
         characterController.height = 1.86f;
         isDodging = false;
 
+    }
+
+
+    private void Attack()
+    {
+
+        if (withWeapon)
+        {
+            animator.SetTrigger("Attack");
+            isAttacking = true;
+
+        }
+
+        
+    }
+
+    private void StopAttack()
+    {
+        isAttacking = false;                         //Se le añade un evento a la animación de ataque
     }
 
 
