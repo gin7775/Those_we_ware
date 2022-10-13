@@ -49,15 +49,12 @@ public class Player : MonoBehaviour
     }
     public void OnRoll(InputValue value)
     {
-
-        if (direction.magnitude != 0)                         //Solo cuando el jugador se este moviendo.
-        {
+                          
            
-            if(!isDodging )
+            if(!isDodging && !isAttacking)
             {
                 StartCoroutine(Dodge());                       
             }
-        }
        
 
     }
