@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class Projectile_Test : MonoBehaviour
 {
-
-   // public float speed;
-    //public Rigidbody rb;
-
+    public float lifeTime=10;
+   
     void Start()
     {
-
-
-        //rb = this.gameObject.GetComponent<Rigidbody>();
-
-       // rb.AddForce(Vector3.right * speed,ForceMode.VelocityChange);
-
-        Destroy(this.gameObject, 4.5f);
+        Destroy(this.gameObject, lifeTime);
     }
 
    
