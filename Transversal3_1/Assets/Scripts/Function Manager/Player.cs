@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
 
     float dodgeTimer;
 
+    public GameObject slashObj;
+    
+
     public bool withWeapon;
     public bool isAttacking;
    
@@ -139,12 +142,14 @@ public class Player : MonoBehaviour
     }
 
 
-    private void Attack()
+    void Attack()
     {
 
         if (withWeapon)
         {
+           
             animator.SetTrigger("Attack");
+           
             isAttacking = true;
 
         }
@@ -155,7 +160,17 @@ public class Player : MonoBehaviour
     private void StopAttack()
     {
         isAttacking = false;                         //Se le añade un evento a la animación de ataque
+                                                   
     }
 
+
+    public void ActivarSlash()
+    {
+        slashObj.SetActive(true);
+    }
+    public void DesactivarSlash()
+    {
+        slashObj.SetActive(false);
+    }
 
 }
